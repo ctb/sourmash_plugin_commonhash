@@ -3,16 +3,12 @@ name = "sourmash_plugin_commonhash"
 description = "sourmash plugin to calculate common hashes across multiple sketches."
 readme = "README.md"
 requires-python = ">=3.8"
-version = "0.1"
+version = "0.2"
 
 dependencies = ["sourmash>=4.8.0,<5"]
 
 [metadata]
 license = { text = "BSD 3-Clause License" }
-
-# CTB note: you only need to include information about the entry points
-# that your plugin defines; remove the rest. Multiple entry points of
-# any particular type are perfectly fine too!
 
 [project.entry-points."sourmash.cli_script"]
 commonhash = "sourmash_plugin_commonhash:Command_CommonHash"
