@@ -1,16 +1,30 @@
 """
-Filter hashes in FracMinHash sketches for presence in minimum number of
-samples.
+filter hashes by min occurrence across sketches
 
-Supports the full range of sourmash output formats per
+Reduce 'noise' in Jaccard comparisons of sequencing data by removing
+hashes that are present in only a few sketches.
 
-https://sourmash.readthedocs.io/en/latest/command-line.html#choosing-signature-output-formats
+'commonhash' supports the full range of sourmash sketch output formats [1].
 
-For improvement CTB:
-* support full range of moltypes
-* support max samples, too
+[1] https://sourmash.readthedocs.io/en/latest/command-line.html#choosing-signature-output-formats
+
+---
 """
-import sys
+
+usage="""
+   sourmash scripts commonhash [ -m 2 ] *.sig.gz -o filtered.zip
+"""
+
+epilog="""
+See https://github.com/ctb/sourmash_plugin_commonhash for more examples.
+
+Need help? Have questions? Ask at http://github.com/sourmash/issues!
+"""
+
+# For improvement CTB:
+# * support full range of moltypes
+# * support max samples, too
+
 import argparse
 import sourmash
 from sourmash import sourmash_args, plugins
@@ -24,7 +38,10 @@ from collections import Counter
 
 class Command_CommonHash(plugins.CommandLinePlugin):
     command = 'commonhash'
-    description = "filter hashes by min occurrence across sketches"
+    description = __doc__
+    usage = usage
+    epilog = epilog
+    formatter_class = argparse.RawTextHelpFormatter
 
     def __init__(self, p):
         super().__init__(p)

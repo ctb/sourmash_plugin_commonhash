@@ -1,8 +1,8 @@
 # sourmash_plugin_commonhash
 
-This plugin helps in situations where you have sketched many samples
-and you want to remove k-mers that are present in 1 (or only a few)
-samples. This helps reduce noise in Jaccard comparisons between samples.
+If you have sketched many samples and you want to remove "rare" k-mers
+(present in 1, or only a few samples), this plugin is for you!  This
+procedure helps reduce noise in Jaccard comparisons between samples.
 
 See
 [sourmash#2383](https://github.com/sourmash-bio/sourmash/issues/2383)
