@@ -6,7 +6,7 @@ Supports the full range of sourmash output formats per
 
 https://sourmash.readthedocs.io/en/latest/command-line.html#choosing-signature-output-formats
 
-For integration into sourmash sig commonhash or occurrence,
+For improvement CTB:
 * support full range of moltypes
 * support max samples, too
 """
@@ -28,10 +28,13 @@ class Command_CommonHash(plugins.CommandLinePlugin):
 
     def __init__(self, p):
         super().__init__(p)
-        p.add_argument('sigfiles', nargs='+')
-        p.add_argument('-k', '--ksize', default=31, type=int)
-        p.add_argument('-o', '--output', required=True)
-        p.add_argument('-m', '--min-samples', default=2, type=int)
+        p.add_argument('sigfiles', nargs='+', help='input signatures')
+        p.add_argument('-k', '--ksize', default=31, type=int,
+                       help='select this k-mer size')
+        p.add_argument('-o', '--output', required=True,
+                       help="save sketches to this location; e.g. output.zip or ./output/")
+        p.add_argument('-m', '--min-samples', default=2, type=int,
+                       help="a hash must be in this many samples to be retained")
 
     def main(self, args):
         super().main(args)
