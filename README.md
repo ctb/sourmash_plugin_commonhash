@@ -29,7 +29,7 @@ sketches, extract individual ones, etc.
 ### Example
 
 ```
-sourmash scripts commonhash 
+sourmash scripts commonhash example/*.sig.gz -o commonhash.zip
 ```
 
 should yield:
