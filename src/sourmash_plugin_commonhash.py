@@ -1,4 +1,4 @@
-"""
+"""\
 filter hashes by min occurrence across sketches
 
 Reduce 'noise' in Jaccard comparisons of sequencing data by removing
