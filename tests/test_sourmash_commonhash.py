@@ -1,5 +1,5 @@
 """
-Tests for sourmash_plugin_commonhash..
+Tests for sourmash_plugin_commonhash.
 """
 import os
 import pytest
