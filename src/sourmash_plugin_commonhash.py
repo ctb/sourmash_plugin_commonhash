@@ -95,7 +95,7 @@ def do_commonhash(args):
     # second pass: filter!
     print(f"Exporting filtered signatures to '{args.output}'", file=sys.stderr)
     for filename in args.sigfiles:
-        print(f"Processing {filename}")
+        print(f"Processing {filename}", file=sys.stderr)
         db = sourmash.load_file_as_index(filename)
         db = db.select(ksize=args.ksize, moltype='DNA')
 
@@ -116,4 +116,4 @@ def do_commonhash(args):
 
     save_sigs.close()
 
-    print(f"Saved {len(save_sigs)} signatures to '{args.output}'")
+    print(f"Saved {len(save_sigs)} signatures to '{args.output}'", file=sys.stderr)
