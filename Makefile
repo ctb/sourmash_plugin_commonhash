@@ -12,5 +12,5 @@ install:
 build:
 	python -m build
 
-make release:
+release:
 	twine upload dist/*
