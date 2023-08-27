@@ -8,3 +8,9 @@ install-dev:
 
 install:
 	python -m pip install .
+
+build:
+	python -m build
+
+make release:
+	twine upload dist/*
