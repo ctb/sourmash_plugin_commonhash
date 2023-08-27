@@ -3,6 +3,7 @@ Tests for sourmash_plugin_commonhash.
 """
 import os
 import pytest
+from collections import Counter
 
 import sourmash
 import sourmash_tst_utils as utils
@@ -40,3 +41,61 @@ def test_run_commonhash(runtmp):
     assert 'Selecting k=31, DNA' in runtmp.last_result.out
     assert "Loaded 10587 hashes from 3 sketches in 3 files." in runtmp.last_result.out
     assert "Of 10587 hashes, keeping 2529 that are in 2 or more samples." in runtmp.last_result.out
+
+
+def test_filter(runtmp):
+    # test filtering at minimum of 2 (default)
+    sig2 = utils.get_test_data('2.sig.gz')
+    sig47 = utils.get_test_data('47.sig.gz')
+    sig63 = utils.get_test_data('63.sig.gz')
+
+    output = runtmp.output('commonhash.zip')
+
+    runtmp.sourmash('scripts', 'commonhash', sig2, sig47, sig63,
+                    '-o', output)
+
+    print(runtmp.last_result.out)
+    print(runtmp.last_result.err)
+    assert runtmp.last_result.status == 0
+
+    assert os.path.exists(output)
+    output_sigs = sourmash.load_file_as_signatures(output)
+    output_sigs = list(output_sigs)
+    assert len(output_sigs) == 3
+
+    counter = Counter()
+    for ss in output_sigs:
+        for hashval in ss.minhash.hashes:
+            counter[hashval] += 1
+
+    # the minimum element number should be 2!
+    assert counter.most_common()[-1][1] == 2
+
+
+def test_filter_at_3(runtmp):
+    # test filtering at minimum of 3
+    sig2 = utils.get_test_data('2.sig.gz')
+    sig47 = utils.get_test_data('47.sig.gz')
+    sig63 = utils.get_test_data('63.sig.gz')
+
+    output = runtmp.output('commonhash.zip')
+
+    runtmp.sourmash('scripts', 'commonhash', sig2, sig47, sig63,
+                    '-o', output, '-m', '3')
+
+    print(runtmp.last_result.out)
+    print(runtmp.last_result.err)
+    assert runtmp.last_result.status == 0
+
+    assert os.path.exists(output)
+    output_sigs = sourmash.load_file_as_signatures(output)
+    output_sigs = list(output_sigs)
+    assert len(output_sigs) == 3
+
+    counter = Counter()
+    for ss in output_sigs:
+        for hashval in ss.minhash.hashes:
+            counter[hashval] += 1
+
+    # should be nothing with 3!
+    assert len(counter.most_common()) == 0
